@@ -13,7 +13,7 @@ Deck::Deck () : top(0)
             for (int k = 0; k < 2; k++)
             {
                 cards [index].setColor(Card::Color(i));
-                cards [index].setSymbol(Card::Symbol(j);
+                cards [index].setSymbol(Card::Symbol(j));
                 index++;
             }
         }

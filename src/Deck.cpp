@@ -25,6 +25,8 @@ Deck::Deck () : top(0)
         cards [index].setSymbol(Card::Symbol(0));
         index++;
     }
+
+    mix();
 }
 
 ///////////////////////////////////////

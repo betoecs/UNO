@@ -15,7 +15,7 @@
    version="1.1"
    id="svg8"
    inkscape:version="0.92.2 2405546, 2018-03-11"
-   sodipodi:docname="drawing.svg">
+   sodipodi:docname="cards.svg">
   <defs
      id="defs2" />
   <sodipodi:namedview
@@ -26,10 +26,10 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.1758154"
-     inkscape:cx="264.32592"
+     inkscape:cx="430.74142"
      inkscape:cy="865.45918"
      inkscape:document-units="mm"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="layer2"
      showgrid="false"
      inkscape:snap-bbox="true"
      inkscape:snap-bbox-midpoints="true"
@@ -299,7 +299,10 @@
            sodipodi:role="line">f</tspan></text>
     </g>
     <g
-       id="g1224">
+       id="g1224"
+       inkscape:export-filename="/home/sam/Documents/verano/inteligencia_artificial/UNO/assets/cards/90.png"
+       inkscape:export-xdpi="95.699997"
+       inkscape:export-ydpi="95.699997">
       <path
          inkscape:connector-curvature="0"
          id="rect815-9-8-5"
@@ -1052,7 +1055,10 @@
            sodipodi:role="line">a</tspan></text>
     </g>
     <g
-       id="g1423">
+       id="g1423"
+       inkscape:export-filename="/home/sam/Documents/verano/inteligencia_artificial/UNO/assets/cards/22.png"
+       inkscape:export-xdpi="95.699997"
+       inkscape:export-ydpi="95.699997">
       <path
          inkscape:connector-curvature="0"
          id="rect815-9-8-8"
@@ -1214,7 +1220,10 @@
            sodipodi:role="line">f</tspan></text>
     </g>
     <g
-       id="g1374">
+       id="g1374"
+       inkscape:export-filename="/home/sam/Documents/verano/inteligencia_artificial/UNO/assets/cards/92.png"
+       inkscape:export-xdpi="95.699997"
+       inkscape:export-ydpi="95.699997">
       <path
          inkscape:connector-curvature="0"
          id="rect815-9-8-5-09"
@@ -1694,7 +1703,10 @@
            sodipodi:role="line">d</tspan></text>
     </g>
     <g
-       id="g1493">
+       id="g1493"
+       inkscape:export-filename="/home/sam/Documents/verano/inteligencia_artificial/UNO/assets/cards/73.png"
+       inkscape:export-xdpi="95.699997"
+       inkscape:export-ydpi="95.699997">
       <path
          inkscape:connector-curvature="0"
          id="rect815-9-8-68-5-0"

@@ -31,11 +31,13 @@ public:
         None,
         One,
         Two
-    }
+    };
 
 	Card(Color color, Symbol symbol);
 
     bool isUsed() const;
+    Color getColor() const;
+    Symbol getSymbol() const;
     void setUsed(bool used);
     Compatibility getCompatibility(const Card &card) const;
 

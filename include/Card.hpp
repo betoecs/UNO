@@ -33,12 +33,14 @@ public:
         Two
     };
 
-	Card(Color color, Symbol symbol);
+	Card();
 
     bool isUsed() const;
-    Color getColor() const;
-    Symbol getSymbol() const;
     void setUsed(bool used);
+    Color getColor() const;
+    void setColor(Color color);
+    Symbol getSymbol() const;
+    void setSymbol(Symbol symbol);
     Compatibility getCompatibility(const Card &card) const;
 
 private:

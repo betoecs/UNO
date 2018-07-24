@@ -1,7 +1,7 @@
 #include "Card.hpp"
 
 ///////////////////////////////////////
-Card::Card(Color color, Symbol symbol) : color(color), symbol(symbol), used(false)
+Card::Card() : used(false)
 {
 }
 
@@ -27,6 +27,18 @@ Card::Color Card::getColor() const
 Card::Symbol Card::getSymbol() const
 {
     return symbol;
+}
+
+///////////////////////////////////////
+void Card::setColor(Color color)
+{
+    this->color = color;
+}
+
+///////////////////////////////////////
+void Card::setSymbol(Symbol symbol)
+{
+    this->symbol = symbol;
 }
 
 ///////////////////////////////////////

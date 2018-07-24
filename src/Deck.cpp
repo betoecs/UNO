@@ -10,10 +10,10 @@ Deck::Deck () : top(0)
     {
         for (int j = 1; j < 10; j++)
         {
-            for (for int k = 0; k < 2; k++)
+            for (int k = 0; k < 2; k++)
             {
-                cards [index].setColor(i);
-                cards [index].setSymbol(j);
+                cards [index].setColor(Card::Color(i));
+                cards [index].setSymbol(Card::Symbol(j);
                 index++;
             }
         }
@@ -21,8 +21,8 @@ Deck::Deck () : top(0)
 
     for (int i = 0; i < 4; i++)
     {
-        cards [index].setColor(i);
-        cards [index].setSymbol(0);
+        cards [index].setColor(Card::Color(i));
+        cards [index].setSymbol(Card::Symbol(0));
         index++;
     }
 }
@@ -35,7 +35,7 @@ void Deck::mix()
         Card out;
         int random = rand() % 79;
 
-        out = card [i];
+        out = cards [i];
         cards [i] = cards [random];
         cards [random] = out;
     }

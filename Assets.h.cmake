@@ -1,0 +1,1 @@
+#define ASSETS "${CMAKE_SOURCE_DIR}/assets/"

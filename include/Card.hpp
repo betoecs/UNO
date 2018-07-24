@@ -22,7 +22,8 @@ public:
         Paw,
         Star,
         Bird,
-        Rocket
+        Rocket,
+        Heart
     };
 
     enum Compatibility

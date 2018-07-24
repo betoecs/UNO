@@ -18,13 +18,13 @@ void Card::setUsed(bool used)
 }
 
 ///////////////////////////////////////
-Card::Color getColor() const
+Card::Color Card::getColor() const
 {
     return color;
 }
 
 ///////////////////////////////////////
-Symbol getSymbol() const
+Symbol Card::getSymbol() const
 {
     return symbol;
 }

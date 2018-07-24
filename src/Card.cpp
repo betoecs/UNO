@@ -24,7 +24,7 @@ Card::Color Card::getColor() const
 }
 
 ///////////////////////////////////////
-Symbol Card::getSymbol() const
+Card::Symbol Card::getSymbol() const
 {
     return symbol;
 }

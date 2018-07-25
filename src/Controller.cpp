@@ -1,9 +1,10 @@
 #include "Controller.hpp"
 
 ///////////////////////////////
-Controller::Controller(Scene *scene)
+Controller::Controller(GameScene *scene) : selectedCard(nullptr), scene(scene)
 {
     scene->connectToEvent(sf::Event::MouseMoved, std::bind(&Controller::onMouseMoved, this, std::placeholders::_1));
+    scene->connectToEvent(sf::Event::MouseButtonPressed, std::bind(&Controller::onClick, this, std::placeholders::_1));
 }
 
 ///////////////////////////////
@@ -14,9 +15,29 @@ void Controller::onMouseMoved(const sf::Event &event)
         if (card->getBoundingBox().contains(event.mouseMove.x, event.mouseMove.y))
         {
             if (card->getPosition().y == 0)
+            {
                 card->move(0, -5);
+                selectedCard = card;
+            }
         }
         else if (card->getPosition().y != 0)
+        {
             card->move(0, 5);
+            selectedCard = nullptr;
+        }
+    }
+}
+
+///////////////////////////////
+void Controller::onClick(const sf::Event &event)
+{
+    printf("%p\n", selectedCard);
+    if (! selectedCard)
+        return;
+
+    if (scene->setCurrentCard(selectedCard->getCard()))
+    {
+        removeCard(selectedCard);
+        selectedCard = nullptr;
     }
 }

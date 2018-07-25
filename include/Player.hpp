@@ -14,6 +14,7 @@ class Player : public Entity
 {
 public:
 	Player();
+	void removeCard(CardEntity *card);
 	void addCard(Card *card, bool faceDown);
 	const std::vector <CardEntity *> & getCards() const;
 

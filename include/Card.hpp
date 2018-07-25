@@ -6,24 +6,24 @@ class Card
 public:
     enum Color
     {
-        Red,
-        Blue,
-        Green,
-        Yellow
+        Red = 0,
+        Blue = 1,
+        Green = 2,
+        Yellow = 3
     };
 
     enum Symbol
     {
-        GamePad,
-        Apple,
-        Github,
-        Leaf,
-        Brush,
-        Paw,
-        Star,
-        Bird,
-        Rocket,
-        Heart
+        GamePad = 0,
+        Apple = 1,
+        Github = 2,
+        Leaf = 3,
+        Brush = 4,
+        Paw = 5,
+        Star = 6,
+        Bird = 7,
+        Rocket = 8,
+        Heart = 9
     };
 
     enum Compatibility

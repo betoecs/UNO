@@ -20,7 +20,7 @@ void CardEntity::setCard(Card *card)
 }
 
 ///////////////////////////////////////
-const Card * CardEntity::getCard() const
+Card * CardEntity::getCard()
 {
 	return card;
 }

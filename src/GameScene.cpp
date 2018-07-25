@@ -1,5 +1,6 @@
 #include "GameScene.hpp"
 #include "CardEntity.hpp"
+#include "Controller.hpp"
 #include "AI.hpp"
 
 extern Vector2D windowSize;
@@ -14,7 +15,7 @@ void GameScene::onCreate()
 	deckCard->setPosition(windowSize.x * 0.15f, windowSize.y * 0.5f);
 	addChild(deckCard);
 
-	auto player = new Player;
+	auto player = new Controller(this);
 	player->setPosition(windowSize.x * 0.5f, windowSize.y * 0.9f);
 	addChild(player);
 

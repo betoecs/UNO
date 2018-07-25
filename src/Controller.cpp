@@ -31,7 +31,6 @@ void Controller::onMouseMoved(const sf::Event &event)
 ///////////////////////////////
 void Controller::onClick(const sf::Event &event)
 {
-    printf("%p\n", selectedCard);
     if (! selectedCard)
         return;
 

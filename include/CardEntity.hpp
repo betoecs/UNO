@@ -8,9 +8,9 @@ using namespace lk;
 class CardEntity : public Sprite
 {
 public:
+	CardEntity(Card *card, bool faceDown);
 	Card * getCard();
 	void setCard(Card *card);
-	CardEntity(Card *card, bool faceDown);
 
 private:
 	bool faceDown;

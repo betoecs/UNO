@@ -11,7 +11,8 @@ set(SRC src/main.cpp
 		src/Card.cpp
 		src/CardEntity.cpp
 		src/Player.cpp
-		src/AI.cpp)
+		src/AI.cpp
+		src/Controller.cpp)
 
 add_executable(uno ${SRC})
 target_link_libraries(uno -llittle-knight -lsfml-window -lsfml-graphics -lsfml-system)

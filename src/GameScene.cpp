@@ -8,15 +8,16 @@ extern Vector2D windowSize;
 void GameScene::onCreate()
 {
 	connectToKeyPressed(sf::Keyboard::Escape, std::bind(&Scene::close, this, 0));
+	connectToEvent(sf::Event::MouseButtonPressed, std::bind(&GameScene::onClick, this, std::placeholders::_1));
 	setBackgroundColor(Color("#fff"));
 
 	// Deck card entity
-	auto deckCard = new CardEntity(nullptr, true);
-	deckCard->setPosition(windowSize.x * 0.15f, windowSize.y * 0.5f);
-	addChild(deckCard);
+	deckCardEntity = new CardEntity(nullptr, true);
+	deckCardEntity->setPosition(windowSize.x * 0.15f, windowSize.y * 0.5f);
+	addChild(deckCardEntity);
 
 	// Player and AI
-	auto player = new Controller(this);
+	player = new Controller(this);
 	player->setPosition(windowSize.x * 0.5f, windowSize.y * 0.9f);
 	addChild(player);
 
@@ -56,4 +57,11 @@ bool GameScene::setCurrentCard(Card *card)
 const Card * GameScene::getCurrentCard() const
 {
 	return currentCardEntity->getCard();
+}
+
+///////////////////////////////////////
+void GameScene::onClick(const sf::Event &event)
+{
+	if (deckCardEntity->getBoundingBox().contains(event.mouseButton.x, event.mouseButton.y))
+		player->addCard(deck.getCard(), false);
 }

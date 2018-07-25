@@ -35,3 +35,9 @@ void Player::removeCard(CardEntity *card)
 	}
 	card->release();
 }
+
+///////////////////////////////////////
+bool Player::hasCards() const
+{
+	return (cards.size() != 0);
+}

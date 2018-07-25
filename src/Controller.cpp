@@ -34,7 +34,7 @@ void Controller::onClick(const sf::Event &event)
     if (! selectedCard)
         return;
 
-    if (scene->setCurrentCard(selectedCard->getCard()))
+    if (scene->setCurrentCard(selectedCard->getCard(), this))
     {
         removeCard(selectedCard);
         selectedCard = nullptr;

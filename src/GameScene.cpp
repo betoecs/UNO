@@ -21,7 +21,7 @@ void GameScene::onCreate()
 	player->setPosition(windowSize.x * 0.5f, windowSize.y * 0.9f);
 	addChild(player);
 
-	auto ai = new AI;
+	ai = new AI(this);
 	ai->setPosition(windowSize.x * 0.5f, windowSize.y * 0.1f);
 	addChild(ai);
 
@@ -35,6 +35,8 @@ void GameScene::onCreate()
 	currentCardEntity = new CardEntity(deck.getCard(), false);
 	currentCardEntity->setPosition(windowSize * 0.5f);
 	addChild(currentCardEntity);
+
+	currentPlayer = player;
 }
 
 ///////////////////////////////////////
@@ -44,12 +46,32 @@ void GameScene::onClose(int scene)
 }
 
 ///////////////////////////////////////
-bool GameScene::setCurrentCard(Card *card)
+void GameScene::onUpdate(float frameTime)
 {
-	if (currentCardEntity->getCard()->getCompatibility(*card) == Card::None)
+	if (ai == currentPlayer)
+		ai->think();
+}
+
+///////////////////////////////////////
+Deck & GameScene::getDeck()
+{
+	return deck;
+}
+
+///////////////////////////////////////
+bool GameScene::setCurrentCard(Card *card, Player *applicant)
+{
+	if (applicant != currentPlayer || currentCardEntity->getCard()->getCompatibility(*card) == Card::None)
 		return false;
 
+	currentCardEntity->getCard()->setUsed(false);
 	currentCardEntity->setCard(card);
+
+	if (currentPlayer->hasCards())
+		currentPlayer = (applicant == player) ? ai : player;
+	else
+		close(0);
+
 	return true;
 }
 
@@ -62,6 +84,6 @@ const Card * GameScene::getCurrentCard() const
 ///////////////////////////////////////
 void GameScene::onClick(const sf::Event &event)
 {
-	if (deckCardEntity->getBoundingBox().contains(event.mouseButton.x, event.mouseButton.y))
+	if (player == currentPlayer && deckCardEntity->getBoundingBox().contains(event.mouseButton.x, event.mouseButton.y))
 		player->addCard(deck.getCard(), false);
 }

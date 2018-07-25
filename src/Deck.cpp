@@ -1,5 +1,6 @@
 #include "Deck.hpp"
 #include <math.h>
+#include <stdio.h>
 
 ///////////////////////////////////////
 Deck::Deck () : top(0)
@@ -46,9 +47,16 @@ void Deck::mix()
 ///////////////////////////////////////
 Card * Deck::getCard()
 {
-    Card *card = &cards [top];
-    card->setUsed(true);
-    top++;
+	if (top >= 78)
+		top = 0;
 
+    Card *card;
+	do
+	{
+		card = &cards [top];
+		top++;
+	} while (card->isUsed());
+
+	card->setUsed(true);
     return card;
 }

@@ -14,7 +14,11 @@ void CardEntity::setCard(Card *card)
 	if (faceDown)
 		setTexture("cards/card_back.png");
 	else if (card)
-		setTexture("cards/" + std::to_string(card->getSymbol()) + std::to_string(card->getColor()) + ".png");
+	{
+		std::string cardName = std::to_string(card->getSymbol()) + std::to_string(card->getColor());
+		printf("card name: %s\n", cardName.c_str());
+		setTexture("cards/" + cardName + ".png");
+	}
 
 	setOriginCenter();
 }

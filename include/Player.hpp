@@ -17,6 +17,7 @@ public:
 	void removeCard(CardEntity *card);
 	void addCard(Card *card, bool faceDown);
 	const std::vector <CardEntity *> & getCards() const;
+	bool hasCards() const;
 
 private:
 	std::vector <CardEntity *> cards;

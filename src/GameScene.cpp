@@ -67,7 +67,7 @@ bool GameScene::setCurrentCard(Card *card, Player *applicant)
 	currentCardEntity->getCard()->setUsed(false);
 	currentCardEntity->setCard(card);
 
-	if (currentPlayer->hasCards())
+	if (currentPlayer->getCards().size() > 1)
 		currentPlayer = (applicant == player) ? ai : player;
 	else
 		close(0);

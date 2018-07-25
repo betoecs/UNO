@@ -12,7 +12,7 @@ public:
 
 private:
     int top;
-    Card cards [78];
+    Card cards [102];
 };
 
 #endif // DECK_HPP

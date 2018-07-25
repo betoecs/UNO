@@ -7,9 +7,10 @@ Deck::Deck () : top(0)
 {
     int index = 0;
 
+	// 2 cards of each color for symbols from Appel to Take2
     for (int i = 0; i < 4; i++)
     {
-        for (int j = 1; j < 10; j++)
+        for (int j = 1; j < 13; j++)
         {
             for (int k = 0; k < 2; k++)
             {
@@ -20,6 +21,7 @@ Deck::Deck () : top(0)
         }
     }
 
+	// 1 card of each color for GamePad
     for (int i = 0; i < 4; i++)
     {
         cards [index].setColor(Card::Color(i));
@@ -47,7 +49,7 @@ void Deck::mix()
 ///////////////////////////////////////
 Card * Deck::getCard()
 {
-	if (top >= 78)
+	if (top >= 102)
 		top = 0;
 
     Card *card;

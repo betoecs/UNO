@@ -1,4 +1,5 @@
 #include "Card.hpp"
+#include <stdio.h>
 
 ///////////////////////////////////////
 Card::Card() : used(false)

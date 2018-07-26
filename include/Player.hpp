@@ -3,6 +3,7 @@
 
 #include "Card.hpp"
 #include "CardEntity.hpp"
+#include "Deck.hpp"
 
 #include <vector>
 #include <LK/Entity.hpp>
@@ -13,15 +14,17 @@ using namespace lk;
 class Player : public Entity
 {
 public:
-	Player();
+	Player(Deck *deck);
 	void removeCard(CardEntity *card);
 	void addCard(Card *card, bool faceDown);
 	const std::vector <CardEntity *> & getCards() const;
 	bool hasCards() const;
+	virtual void take(int number);
 
 private:
 	std::vector <CardEntity *> cards;
 	LinearLayout *cardsLayout;
+	Deck *deck;
 };
 
 #endif // PLAYER_HPP

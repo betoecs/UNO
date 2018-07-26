@@ -4,6 +4,7 @@
 #include "CardEntity.hpp"
 #include "Deck.hpp"
 #include "Player.hpp"
+#include "ColorSelectorEntity.hpp"
 
 #include <SFML/Window/Event.hpp>
 #include <LK/Scene.hpp>
@@ -22,6 +23,7 @@ public:
 	bool setCurrentCard(Card *card, Player *applicant);
 	const Card * getCurrentCard() const;
 	void onClick(const sf::Event &event);
+	void onSelectedColor(Card::Color color);
 
 private:
 	Deck deck;
@@ -30,6 +32,8 @@ private:
 	Player *player;
 	AI *ai;
 	Player *currentPlayer;
+	Player *nextPlayer;
+	ColorSelectorEntity *colorSelector;
 };
 
 #endif // GAME_SCENE_HPP

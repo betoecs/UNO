@@ -17,6 +17,8 @@ public:
 	AI(GameScene *scene);
 	void think();
 	void doCommand();
+	Card::Color chooseColor() const;
+	void take(int number) override;
 
 private:
 	GameScene *scene;

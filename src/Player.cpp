@@ -2,7 +2,7 @@
 #include "CardEntity.hpp"
 
 ///////////////////////////////////////
-Player::Player()
+Player::Player(Deck *deck) : deck(deck)
 {
 	cardsLayout = new LinearLayout(20);
 	addChild(cardsLayout);
@@ -40,4 +40,11 @@ void Player::removeCard(CardEntity *card)
 bool Player::hasCards() const
 {
 	return cards.size();
+}
+
+///////////////////////////////////////
+void Player::take(int number)
+{
+	for (int i = 0; i < number; i++)
+		addCard(deck->getCard(), false);
 }

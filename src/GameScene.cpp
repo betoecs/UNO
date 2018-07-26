@@ -1,6 +1,5 @@
 #include "GameScene.hpp"
 #include "Controller.hpp"
-#include "ColorSelectorEntity.hpp"
 #include "AI.hpp"
 
 extern Vector2D windowSize;
@@ -38,6 +37,14 @@ void GameScene::onCreate()
 	addChild(currentCardEntity);
 
 	currentPlayer = player;
+	nextPlayer = ai;
+
+	// Color selector entity
+	colorSelector = new ColorSelectorEntity;
+	colorSelector->setVisible(false);
+	colorSelector->setPosition(windowSize * 0.5f);
+	colorSelector->onSelect.connect(std::bind(&GameScene::onSelectedColor, this, std::placeholders::_1));
+	addChild(colorSelector);
 }
 
 ///////////////////////////////////////
@@ -67,48 +74,42 @@ bool GameScene::setCurrentCard(Card *card, Player *applicant)
 
 	currentCardEntity->getCard()->setUsed(false);
 	currentCardEntity->setCard(card);
+	Card::Symbol cardSymbol = currentCardEntity->getCard()->getSymbol();
 
-	if (currentCardEntity->getCard()->getSymbol() == Card::Skip || currentCardEntity->getCard()->getSymbol() == Card::Reverse)
-		return true;
-
-	if (currentCardEntity->getCard()->getSymbol() == Card::Take2)
+	if (cardSymbol == Card::Take2)
 	{
-		if(currentPlayer == player)
+		nextPlayer->take(2);
+	}
+	else if (cardSymbol == Card::Wild || cardSymbol == Card::Take4)
+	{
+		if (currentPlayer == player)
 		{
-				ai->addCard(deck.getCard(), true);
-				ai->addCard(deck.getCard(), true);
+			currentPlayer = nullptr;
+			colorSelector->setVisible(true);
 		}
 		else
 		{
-				player->addCard(deck.getCard(), false);
-				player->addCard(deck.getCard(), false);
+			currentCardEntity->getCard()->setColor(ai->chooseColor());
 		}
-		return true;
+
+		if (cardSymbol == Card::Take4)
+			nextPlayer->take(4);
 	}
 
-	if (currentCardEntity->getCard()->getSymbol() == Card::Wild)
-		return true;
-
-	if (currentCardEntity->getCard()->getSymbol() == Card::Take4)
+	if (currentPlayer)
 	{
-		if(currentPlayer == player)
+		if (currentPlayer->getCards().size() > 1)
 		{
-			for (int i = 0; i < 4; i++)
-				ai->addCard(deck.getCard(), true);
+			if (cardSymbol != Card::Skip && cardSymbol != Card::Reverse && cardSymbol != Card::Wild &&
+				cardSymbol != Card::Take4 && cardSymbol != Card::Take2)
+			{
+				nextPlayer = currentPlayer;
+				currentPlayer = (applicant == player) ? ai : player;
+			}
 		}
 		else
-		{
-			for (int i = 0; i < 4; i++)
-				player->addCard(deck.getCard(), false);
-		}
-		return true;
+			close(0);
 	}
-
-	if (currentPlayer->getCards().size() > 1)
-		currentPlayer = (applicant == player) ? ai : player;
-
-	else
-		close(0);
 
 	return true;
 }
@@ -124,4 +125,11 @@ void GameScene::onClick(const sf::Event &event)
 {
 	if (player == currentPlayer && deckCardEntity->getBoundingBox().contains(event.mouseButton.x, event.mouseButton.y))
 		player->addCard(deck.getCard(), false);
+}
+
+///////////////////////////////////////
+void GameScene::onSelectedColor(Card::Color color)
+{
+	currentCardEntity->getCard()->setColor(color);
+	currentPlayer = player;
 }

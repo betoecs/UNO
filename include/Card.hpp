@@ -7,8 +7,8 @@ public:
     enum Color
     {
         Red		= 0,
-        Blue	= 1,
-        Green	= 2,
+        Green	= 1,
+		Blue	= 2,
         Yellow	= 3
     };
 
@@ -28,7 +28,7 @@ public:
 		Reverse = 11,
 		Take2	= 12,
         Wild    = 500,
-        Take4   = 600 
+        Take4   = 600
     };
 
     enum Compatibility

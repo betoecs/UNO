@@ -1,7 +1,7 @@
 #include "Controller.hpp"
 
 ///////////////////////////////
-Controller::Controller(GameScene *scene) : selectedCard(nullptr), scene(scene)
+Controller::Controller(GameScene *scene) : Player(&scene->getDeck()), selectedCard(nullptr), scene(scene)
 {
     scene->connectToEvent(sf::Event::MouseMoved, std::bind(&Controller::onMouseMoved, this, std::placeholders::_1));
     scene->connectToEvent(sf::Event::MouseButtonPressed, std::bind(&Controller::onClick, this, std::placeholders::_1));

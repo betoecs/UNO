@@ -1,7 +1,8 @@
 #include "AI.hpp"
+#include <math.h>
 
 ///////////////////////////////////////
-AI::AI(GameScene *scene) : scene(scene), command(None), cardToSet(nullptr)
+AI::AI(GameScene *scene) : Player(&scene->getDeck()), scene(scene), command(None), cardToSet(nullptr)
 {
 }
 
@@ -38,4 +39,17 @@ void AI::doCommand()
 
 	cardToSet = nullptr;
 	command = None;
+}
+
+///////////////////////////////////////
+Card::Color AI::chooseColor() const
+{
+	return Card::Color(rand() % 4);
+}
+
+///////////////////////////////////////
+void AI::take(int number)
+{
+	for (int i = 0; i < number; i++)
+		addCard(scene->getDeck().getCard(), true);
 }

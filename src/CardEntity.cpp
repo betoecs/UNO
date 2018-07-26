@@ -15,8 +15,10 @@ void CardEntity::setCard(Card *card)
 		setTexture("cards/card_back.png");
 	else if (card)
 	{
-		std::string cardName = std::to_string(card->getSymbol()) + std::to_string(card->getColor());
-		printf("card name: %s\n", cardName.c_str());
+
+		std::string cardName = std::to_string(card->getSymbol());
+		if (card->getSymbol() != Card::Wild && card->getSymbol() != Card::Take4)
+		 	cardName += std::to_string(card->getColor());
 		setTexture("cards/" + cardName + ".png");
 	}
 

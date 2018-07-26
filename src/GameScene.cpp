@@ -86,6 +86,24 @@ bool GameScene::setCurrentCard(Card *card, Player *applicant)
 		return true;
 	}
 
+	if (currentCardEntity->getCard()->getSymbol() == Card::Wild)
+		return true;
+
+	if (currentCardEntity->getCard()->getSymbol() == Card::Take4)
+	{
+		if(currentPlayer == player)
+		{
+			for (int i = 0; i < 4; i++)
+				ai->addCard(deck.getCard(), true);
+		}
+		else
+		{
+			for (int i = 0; i < 4; i++)
+				player->addCard(deck.getCard(), false);
+		}
+		return true;
+	}
+
 	if (currentPlayer->getCards().size() > 1)
 		currentPlayer = (applicant == player) ? ai : player;
 

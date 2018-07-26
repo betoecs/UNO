@@ -26,7 +26,9 @@ public:
         Heart	= 9,
 		Skip	= 10,
 		Reverse = 11,
-		Take2	= 12 
+		Take2	= 12,
+        Wild    = 500,
+        Take4   = 600 
     };
 
     enum Compatibility

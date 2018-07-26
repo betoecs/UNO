@@ -29,13 +29,22 @@ Deck::Deck () : top(0)
         index++;
     }
 
+    // 4 cards of wild and take 4
+    for (int i = 0; i < 4; i++)
+    {
+        cards [index].setSymbol(Card::Wild);
+        index++;
+        cards [index].setSymbol(Card::Take4);
+        index++;
+    }
+
     mix();
 }
 
 ///////////////////////////////////////
 void Deck::mix()
 {
-    for (int i = 0; i < 78; i++)
+    for (int i = 0; i < 110; i++)
     {
         Card out;
         int random = rand() % 79;
@@ -49,7 +58,7 @@ void Deck::mix()
 ///////////////////////////////////////
 Card * Deck::getCard()
 {
-	if (top >= 102)
+	if (top >= 110)
 		top = 0;
 
     Card *card;

@@ -5,6 +5,7 @@ configure_file(Assets.h.cmake ${CMAKE_SOURCE_DIR}/include/Assets.h)
 include_directories(${CMAKE_SOURCE_DIR}/include)
 set(SRC src/main.cpp
 		src/MainMenu.cpp
+		src/ColorSelectorEntity.cpp
 		src/ConfigMenu.cpp
 		src/GameScene.cpp
 		src/Deck.cpp

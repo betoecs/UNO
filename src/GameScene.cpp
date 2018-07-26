@@ -67,8 +67,27 @@ bool GameScene::setCurrentCard(Card *card, Player *applicant)
 	currentCardEntity->getCard()->setUsed(false);
 	currentCardEntity->setCard(card);
 
+	if (currentCardEntity->getCard()->getSymbol() == Card::Skip || currentCardEntity->getCard()->getSymbol() == Card::Reverse)
+		return true;
+
+	if (currentCardEntity->getCard()->getSymbol() == Card::Take2)
+	{
+		if(currentPlayer == player)
+		{
+				ai->addCard(deck.getCard(), true);
+				ai->addCard(deck.getCard(), true);
+		}
+		else
+		{
+				player->addCard(deck.getCard(), false);
+				player->addCard(deck.getCard(), false);
+		}
+		return true;
+	}
+
 	if (currentPlayer->getCards().size() > 1)
 		currentPlayer = (applicant == player) ? ai : player;
+
 	else
 		close(0);
 

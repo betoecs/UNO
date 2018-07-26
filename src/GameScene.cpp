@@ -1,5 +1,6 @@
 #include "GameScene.hpp"
 #include "Controller.hpp"
+#include "ColorSelectorEntity.hpp"
 #include "AI.hpp"
 
 extern Vector2D windowSize;

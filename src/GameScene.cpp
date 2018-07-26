@@ -25,11 +25,8 @@ void GameScene::onCreate()
 	ai->setPosition(windowSize.x * 0.5f, windowSize.y * 0.1f);
 	addChild(ai);
 
-	for (int i = 0; i < 7; i++)
-	{
-		player->addCard(deck.getCard(), false);
-		ai->addCard(deck.getCard(), true);
-	}
+	player->take(7);
+	ai->take(7);
 
 	// Current card entity
 	currentCardEntity = new CardEntity(deck.getCard(), false);

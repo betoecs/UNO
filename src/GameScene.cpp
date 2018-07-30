@@ -1,6 +1,6 @@
+#include "AI.hpp"
 #include "GameScene.hpp"
 #include "Controller.hpp"
-#include "AI.hpp"
 
 extern Vector2D windowSize;
 
@@ -30,6 +30,11 @@ void GameScene::onCreate()
 
 	// Current card entity
 	currentCardEntity = new CardEntity(deck.getCard(), false);
+	while (currentCardEntity->getCard()->getSymbol() == Card::Wild || currentCardEntity->getCard()->getSymbol() == Card::Take4)
+	{
+		currentCardEntity->getCard()->setUsed(false);
+		currentCardEntity->setCard(deck.getCard());
+	}
 	currentCardEntity->setPosition(windowSize * 0.5f);
 	addChild(currentCardEntity);
 
@@ -70,6 +75,8 @@ bool GameScene::setCurrentCard(Card *card, Player *applicant)
 		return false;
 
 	currentCardEntity->getCard()->setUsed(false);
+	if (currentCardEntity->getCard()->getSymbol() == Card::Wild || currentCardEntity->getCard()->getSymbol() == Card::Take4 )
+		currentCardEntity->getCard()->setColor(Card::NoColor);
 	currentCardEntity->setCard(card);
 	Card::Symbol cardSymbol = currentCardEntity->getCard()->getSymbol();
 

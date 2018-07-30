@@ -45,10 +45,10 @@ void Card::setSymbol(Symbol symbol)
 ///////////////////////////////////////
 Card::Compatibility Card::getCompatibility(const Card &card) const
 {
-    if ((card.symbol == symbol && card.color == color) || card.symbol == Wild || card.symbol == Take4)
+    if ((card.symbol == symbol && (card.color == color || card.color == Card::NoColor)) || card.symbol == Wild || card.symbol == Take4)
         return Two;
 
-    if (card.symbol == symbol || card.color == color)
+    if (card.symbol == symbol || (card.color == color || card.color == Card::NoColor))
         return One;
 
     return None;

@@ -47,7 +47,7 @@ void Deck::mix()
     for (int i = 0; i < 110; i++)
     {
         Card out;
-        int random = rand() % 79;
+        int random = rand() % 110;
 
         out = cards [i];
         cards [i] = cards [random];

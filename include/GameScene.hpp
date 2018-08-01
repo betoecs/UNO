@@ -16,6 +16,7 @@ class GameScene : public Scene
 {
 public:
 	void onCreate() override;
+	void onReopen() override;
 	void onClose(int scene) override;
 
 	void onUpdate(float frameTime) override;

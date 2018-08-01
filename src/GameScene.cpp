@@ -1,6 +1,9 @@
 #include "AI.hpp"
 #include "GameScene.hpp"
 #include "Controller.hpp"
+#include "GameOverScene.hpp"
+
+#include <LK/Text.hpp>
 
 extern Vector2D windowSize;
 
@@ -47,12 +50,44 @@ void GameScene::onCreate()
 	colorSelector->setPosition(windowSize * 0.5f);
 	colorSelector->onSelect.connect(std::bind(&GameScene::onSelectedColor, this, std::placeholders::_1));
 	addChild(colorSelector);
+
+	auto font = AssetsManager::getFont("riffic.otf");
+
+	// Player turn indicator
+	auto playerTurn = new Text("Player", font, 50);
+	playerTurn->setName("playerTurn");
+	playerTurn->setBold(true);
+	playerTurn->setColor(Color("#69ec2c"));
+	playerTurn->setOriginCenter();
+	playerTurn->setOutlineThickness(5);
+	playerTurn->setPosition(windowSize.x * 0.9f, windowSize.y * 0.6f);
+	addChild(playerTurn);
+
+	// AI turn indicator
+	auto aiTurn = new Text("AI", font, 50);
+	aiTurn->setName("aiTurn");
+	aiTurn->setBold(true);
+	aiTurn->setColor(Color("#797a78"));
+	aiTurn->setOriginCenter();
+	aiTurn->setOutlineThickness(5);
+	aiTurn->setPosition(windowSize.x * 0.9f, windowSize.y * 0.4f);
+	addChild(aiTurn);
 }
 
 ///////////////////////////////////////
 void GameScene::onClose(int scene)
 {
-	directorAction.type = DirectorAction::PopScene;
+	bool winner;
+	if (player->getCards().size() == 0)
+		winner = true;
+	if (ai->getCards().size() == 0)
+		winner = false;
+
+	switch (scene)
+	{
+		case 0: directorAction.type = DirectorAction::PopScene;
+		case 1: directorAction.type = DirectorAction::PushScene; directorAction.scene = new GameOverScene(winner);
+	}
 }
 
 ///////////////////////////////////////
@@ -109,10 +144,19 @@ bool GameScene::setCurrentCard(Card *card, Player *applicant)
 			{
 				nextPlayer = currentPlayer;
 				currentPlayer = (applicant == player) ? ai : player;
+
+				auto playerTurnFlag = dynamic_cast <Text *> (getChild("playerTurn"));
+				auto aiTurnFlag = dynamic_cast <Text *> (getChild("aiTurn"));
+
+				if (playerTurnFlag && aiTurnFlag)
+				{
+					aiTurnFlag->setColor((currentPlayer == ai) ? Color("#69ec2c") : Color("#797a78"));
+					playerTurnFlag->setColor((currentPlayer == player) ? Color("#69ec2c") : Color("#797a78"));
+				}
 			}
 		}
 		else
-			close(0);
+			close(1);
 	}
 
 	return true;
@@ -136,4 +180,10 @@ void GameScene::onSelectedColor(Card::Color color)
 {
 	currentCardEntity->getCard()->setColor(color);
 	currentPlayer = player;
+}
+
+///////////////////////////////////////
+void GameScene::onReopen()
+{
+
 }

@@ -6,6 +6,7 @@ include_directories(${CMAKE_SOURCE_DIR}/include)
 set(SRC src/main.cpp
 		src/MainMenu.cpp
 		src/ColorSelectorEntity.cpp
+		src/GameOverScene.cpp
 		src/ConfigMenu.cpp
 		src/GameScene.cpp
 		src/Deck.cpp

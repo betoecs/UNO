@@ -54,38 +54,22 @@ void GameScene::onCreate()
 	auto font = AssetsManager::getFont("riffic.otf");
 
 	// Player turn indicator
-	auto playerTurn = new Text("Player", font, 50);
-	playerTurn->setName("playerTurn");
-	playerTurn->setBold(true);
-	playerTurn->setColor(Color("#69ec2c"));
-	playerTurn->setOriginCenter();
-	playerTurn->setOutlineThickness(5);
-	playerTurn->setPosition(windowSize.x * 0.9f, windowSize.y * 0.6f);
-	addChild(playerTurn);
-
-	// AI turn indicator
-	auto aiTurn = new Text("AI", font, 50);
-	aiTurn->setName("aiTurn");
-	aiTurn->setBold(true);
-	aiTurn->setColor(Color("#797a78"));
-	aiTurn->setOriginCenter();
-	aiTurn->setOutlineThickness(5);
-	aiTurn->setPosition(windowSize.x * 0.9f, windowSize.y * 0.4f);
-	addChild(aiTurn);
+	turnIndicator = new TurnIndicator();
+	turnIndicator->setPosition(windowSize.x * 0.9, windowSize.y * 0.5f);
+	turnIndicator->addPlayer("AI");
+	turnIndicator->addPlayer("Player");
+	turnIndicator->setCurrentPlayer(1);
+	addChild(turnIndicator);
 }
 
 ///////////////////////////////////////
 void GameScene::onClose(int scene)
 {
-	bool winner;
-	if (player->getCards().size() == 0)
-		winner = true;
-	if (ai->getCards().size() == 0)
-		winner = false;
+	bool winner = (player->getCards().size() == 1) ? true : false;
 
 	switch (scene)
 	{
-		case 0: directorAction.type = DirectorAction::PopScene;
+		case 0: directorAction.type = DirectorAction::PopScene; break;
 		case 1: directorAction.type = DirectorAction::PushScene; directorAction.scene = new GameOverScene(winner);
 	}
 }
@@ -144,15 +128,7 @@ bool GameScene::setCurrentCard(Card *card, Player *applicant)
 			{
 				nextPlayer = currentPlayer;
 				currentPlayer = (applicant == player) ? ai : player;
-
-				auto playerTurnFlag = dynamic_cast <Text *> (getChild("playerTurn"));
-				auto aiTurnFlag = dynamic_cast <Text *> (getChild("aiTurn"));
-
-				if (playerTurnFlag && aiTurnFlag)
-				{
-					aiTurnFlag->setColor((currentPlayer == ai) ? Color("#69ec2c") : Color("#797a78"));
-					playerTurnFlag->setColor((currentPlayer == player) ? Color("#69ec2c") : Color("#797a78"));
-				}
+				turnIndicator->changeTurn();
 			}
 		}
 		else

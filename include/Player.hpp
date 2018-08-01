@@ -11,7 +11,7 @@
 
 using namespace lk;
 
-class Player : public LinearLayout
+class Player : public Entity
 {
 public:
 	Player(Deck *deck);

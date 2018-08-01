@@ -5,6 +5,7 @@
 Player::Player(Deck *deck) : deck(deck)
 {
 	cardsLayout = new LinearLayout(20);
+	cardsLayout->setName("cardsLayout");
 	addChild(cardsLayout);
 }
 
@@ -13,6 +14,7 @@ void Player::addCard(Card *card, bool faceDown)
 {
 	CardEntity *newCard = new CardEntity(card, faceDown);
 	cardsLayout->addChild(newCard);
+	cardsLayout->setPosition(0, 0);
 	cards.push_back(newCard);
 }
 

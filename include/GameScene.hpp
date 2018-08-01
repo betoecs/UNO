@@ -28,6 +28,8 @@ public:
 	void onSelectedColor(Card::Color color);
 
 private:
+	void takeInitialCard();
+
 	Deck deck;
 	CardEntity *currentCardEntity;
 	CardEntity *deckCardEntity;

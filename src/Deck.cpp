@@ -42,6 +42,16 @@ Deck::Deck () : top(0)
 }
 
 ///////////////////////////////////////
+void Deck::reset()
+{
+    for (int i = 0; i < 110; i++)
+        cards [i].setUsed(false);
+
+    top = 0;
+    mix();
+}
+
+///////////////////////////////////////
 void Deck::mix()
 {
     for (int i = 0; i < 110; i++)

@@ -9,13 +9,11 @@ extern Vector2D windowSize;
 ///////////////////////////////////////
 GameOverScene::GameOverScene (bool winner) : winner(winner)
 {
-
 }
 
 ///////////////////////////////////////
 void GameOverScene::onCreate()
 {
-	connectToKeyPressed(sf::Keyboard::Escape, std::bind(&Scene::close, this, 0));
 	setBackgroundColor(Color("#fff"));
 
 	auto font = AssetsManager::getFont("riffic.otf");
@@ -28,14 +26,7 @@ void GameOverScene::onCreate()
 	title->setPosition(windowSize.x * 0.5f, windowSize.y * 0.15);
 	addChild(title);
 
-    std::string isWinner;
-    if (winner)
-         isWinner = "You Win!!  :)";
-    else
-        isWinner = "You Lose :(";
-
-    auto winnerText = new Text(isWinner, font, 110);
-	winnerText->setBold(true);
+    auto winnerText = new Text((winner) ? "You Win!! :)" : "You Lose :(", font, 90);
 	winnerText->setColor(Color("#1fa8ec"));
 	winnerText->setOriginCenter();
 	winnerText->setOutlineThickness(5);
@@ -49,14 +40,14 @@ void GameOverScene::onCreate()
     mainButtonsLayout->setPosition(windowSize.x * 0.5f, windowSize.y * 0.9f);
     addChild(mainButtonsLayout);
 
-    auto playAgainButton = new Button("back-icon.png","",font, 50);
+    auto playAgainButton = new Button("back-icon.png");
     playAgainButton->setOutlineThickness(2);
     playAgainButton->onMouseOver.connect(std::bind(scaleUpButton, playAgainButton));
     playAgainButton->onMouseLeave.connect(std::bind(scaleDownButton, playAgainButton));
     playAgainButton->onClick.connect(std::bind(&Scene::close, this, 1));
     mainButtonsLayout->addChild(playAgainButton);
 
-    auto backToMenuButton = new Button("home-icon.png","",font, 50);
+    auto backToMenuButton = new Button("home-icon.png");
     backToMenuButton->setOutlineThickness(2);
     backToMenuButton->onMouseOver.connect(std::bind(scaleUpButton, backToMenuButton));
     backToMenuButton->onMouseLeave.connect(std::bind(scaleDownButton, backToMenuButton));

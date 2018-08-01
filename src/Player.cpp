@@ -23,6 +23,12 @@ const std::vector <CardEntity *> & Player::getCards() const
 }
 
 ///////////////////////////////////////
+bool Player::hasCards() const
+{
+	return cards.size();
+}
+
+///////////////////////////////////////
 void Player::removeCard(CardEntity *card)
 {
 	for (auto it = cards.begin(); it != cards.end(); ++it)
@@ -37,9 +43,10 @@ void Player::removeCard(CardEntity *card)
 }
 
 ///////////////////////////////////////
-bool Player::hasCards() const
+void Player::removeCards()
 {
-	return cards.size();
+	cards.clear();
+	cardsLayout->removeChildren();
 }
 
 ///////////////////////////////////////

@@ -10,7 +10,7 @@ extern Vector2D windowSize;
 ///////////////////////////////////////
 void GameScene::onCreate()
 {
-	connectToKeyPressed(sf::Keyboard::Escape, std::bind(&Scene::close, this, 0));
+	connectToKeyPressed(sf::Keyboard::Escape, std::bind(&Scene::close, this, 1));
 	connectToEvent(sf::Event::MouseButtonPressed, std::bind(&GameScene::onClick, this, std::placeholders::_1));
 	setBackgroundColor(Color("#fff"));
 
@@ -33,11 +33,7 @@ void GameScene::onCreate()
 
 	// Current card entity
 	currentCardEntity = new CardEntity(deck.getCard(), false);
-	while (currentCardEntity->getCard()->getSymbol() == Card::Wild || currentCardEntity->getCard()->getSymbol() == Card::Take4)
-	{
-		currentCardEntity->getCard()->setUsed(false);
-		currentCardEntity->setCard(deck.getCard());
-	}
+	takeInitialCard();
 	currentCardEntity->setPosition(windowSize * 0.5f);
 	addChild(currentCardEntity);
 
@@ -51,8 +47,6 @@ void GameScene::onCreate()
 	colorSelector->onSelect.connect(std::bind(&GameScene::onSelectedColor, this, std::placeholders::_1));
 	addChild(colorSelector);
 
-	auto font = AssetsManager::getFont("riffic.otf");
-
 	// Player turn indicator
 	turnIndicator = new TurnIndicator();
 	turnIndicator->setPosition(windowSize.x * 0.9, windowSize.y * 0.5f);
@@ -60,6 +54,22 @@ void GameScene::onCreate()
 	turnIndicator->addPlayer("Player");
 	turnIndicator->setCurrentPlayer(1);
 	addChild(turnIndicator);
+}
+
+///////////////////////////////////////
+void GameScene::onReopen()
+{
+	player->removeCards();
+	ai->removeCards();
+
+	deck.reset();
+	player->take(7);
+	ai->take(7);
+	currentPlayer = player;
+	turnIndicator->setCurrentPlayer(1);
+
+	currentCardEntity->setCard(deck.getCard());
+	takeInitialCard();
 }
 
 ///////////////////////////////////////
@@ -159,7 +169,11 @@ void GameScene::onSelectedColor(Card::Color color)
 }
 
 ///////////////////////////////////////
-void GameScene::onReopen()
+void GameScene::takeInitialCard()
 {
-
+	while (currentCardEntity->getCard()->getSymbol() == Card::Wild || currentCardEntity->getCard()->getSymbol() == Card::Take4)
+	{
+		currentCardEntity->getCard()->setUsed(false);
+		currentCardEntity->setCard(deck.getCard());
+	}
 }

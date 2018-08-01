@@ -7,6 +7,7 @@ class Deck
 {
 public:
     Deck();
+    void reset();
     void mix();
     Card * getCard();
 

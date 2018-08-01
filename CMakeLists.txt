@@ -6,6 +6,7 @@ include_directories(${CMAKE_SOURCE_DIR}/include)
 set(SRC src/main.cpp
 		src/MainMenu.cpp
 		src/ColorSelectorEntity.cpp
+		src/GameOverScene.cpp
 		src/ConfigMenu.cpp
 		src/GameScene.cpp
 		src/Deck.cpp
@@ -13,7 +14,8 @@ set(SRC src/main.cpp
 		src/CardEntity.cpp
 		src/Player.cpp
 		src/AI.cpp
-		src/Controller.cpp)
+		src/Controller.cpp
+		src/TurnIndicator.cpp)
 
 add_executable(uno ${SRC})
 target_link_libraries(uno -llittle-knight -lsfml-window -lsfml-graphics -lsfml-system)

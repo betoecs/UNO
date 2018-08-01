@@ -9,7 +9,8 @@ public:
         Red		= 0,
         Green	= 1,
 		Blue	= 2,
-        Yellow	= 3
+        Yellow	= 3,
+        NoColor    = 4
     };
 
     enum Symbol

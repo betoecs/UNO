@@ -42,12 +42,22 @@ Deck::Deck () : top(0)
 }
 
 ///////////////////////////////////////
+void Deck::reset()
+{
+    for (int i = 0; i < 110; i++)
+        cards [i].setUsed(false);
+
+    top = 0;
+    mix();
+}
+
+///////////////////////////////////////
 void Deck::mix()
 {
     for (int i = 0; i < 110; i++)
     {
         Card out;
-        int random = rand() % 79;
+        int random = rand() % 110;
 
         out = cards [i];
         cards [i] = cards [random];

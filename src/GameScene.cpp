@@ -1,13 +1,16 @@
+#include "AI.hpp"
 #include "GameScene.hpp"
 #include "Controller.hpp"
-#include "AI.hpp"
+#include "GameOverScene.hpp"
+
+#include <LK/Text.hpp>
 
 extern Vector2D windowSize;
 
 ///////////////////////////////////////
 void GameScene::onCreate()
 {
-	connectToKeyPressed(sf::Keyboard::Escape, std::bind(&Scene::close, this, 0));
+	connectToKeyPressed(sf::Keyboard::Escape, std::bind(&Scene::close, this, 1));
 	connectToEvent(sf::Event::MouseButtonPressed, std::bind(&GameScene::onClick, this, std::placeholders::_1));
 	setBackgroundColor(Color("#fff"));
 
@@ -25,14 +28,12 @@ void GameScene::onCreate()
 	ai->setPosition(windowSize.x * 0.5f, windowSize.y * 0.1f);
 	addChild(ai);
 
-	for (int i = 0; i < 7; i++)
-	{
-		player->addCard(deck.getCard(), false);
-		ai->addCard(deck.getCard(), true);
-	}
+	player->take(7);
+	ai->take(7);
 
 	// Current card entity
 	currentCardEntity = new CardEntity(deck.getCard(), false);
+	takeInitialCard();
 	currentCardEntity->setPosition(windowSize * 0.5f);
 	addChild(currentCardEntity);
 
@@ -45,12 +46,42 @@ void GameScene::onCreate()
 	colorSelector->setPosition(windowSize * 0.5f);
 	colorSelector->onSelect.connect(std::bind(&GameScene::onSelectedColor, this, std::placeholders::_1));
 	addChild(colorSelector);
+
+	// Player turn indicator
+	turnIndicator = new TurnIndicator();
+	turnIndicator->setPosition(windowSize.x * 0.9, windowSize.y * 0.5f);
+	turnIndicator->addPlayer("AI");
+	turnIndicator->addPlayer("Player");
+	turnIndicator->setCurrentPlayer(1);
+	addChild(turnIndicator);
+}
+
+///////////////////////////////////////
+void GameScene::onReopen()
+{
+	player->removeCards();
+	ai->removeCards();
+
+	deck.reset();
+	player->take(7);
+	ai->take(7);
+	currentPlayer = player;
+	turnIndicator->setCurrentPlayer(1);
+
+	currentCardEntity->setCard(deck.getCard());
+	takeInitialCard();
 }
 
 ///////////////////////////////////////
 void GameScene::onClose(int scene)
 {
-	directorAction.type = DirectorAction::PopScene;
+	bool winner = (player->getCards().size() == 1) ? true : false;
+
+	switch (scene)
+	{
+		case 0: directorAction.type = DirectorAction::PopScene; break;
+		case 1: directorAction.type = DirectorAction::PushScene; directorAction.scene = new GameOverScene(winner);
+	}
 }
 
 ///////////////////////////////////////
@@ -73,6 +104,8 @@ bool GameScene::setCurrentCard(Card *card, Player *applicant)
 		return false;
 
 	currentCardEntity->getCard()->setUsed(false);
+	if (currentCardEntity->getCard()->getSymbol() == Card::Wild || currentCardEntity->getCard()->getSymbol() == Card::Take4 )
+		currentCardEntity->getCard()->setColor(Card::NoColor);
 	currentCardEntity->setCard(card);
 	Card::Symbol cardSymbol = currentCardEntity->getCard()->getSymbol();
 
@@ -105,10 +138,11 @@ bool GameScene::setCurrentCard(Card *card, Player *applicant)
 			{
 				nextPlayer = currentPlayer;
 				currentPlayer = (applicant == player) ? ai : player;
+				turnIndicator->changeTurn();
 			}
 		}
 		else
-			close(0);
+			close(1);
 	}
 
 	return true;
@@ -132,4 +166,14 @@ void GameScene::onSelectedColor(Card::Color color)
 {
 	currentCardEntity->getCard()->setColor(color);
 	currentPlayer = player;
+}
+
+///////////////////////////////////////
+void GameScene::takeInitialCard()
+{
+	while (currentCardEntity->getCard()->getSymbol() == Card::Wild || currentCardEntity->getCard()->getSymbol() == Card::Take4)
+	{
+		currentCardEntity->getCard()->setUsed(false);
+		currentCardEntity->setCard(deck.getCard());
+	}
 }

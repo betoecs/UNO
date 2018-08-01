@@ -5,6 +5,7 @@
 #include "Deck.hpp"
 #include "Player.hpp"
 #include "ColorSelectorEntity.hpp"
+#include "TurnIndicator.hpp"
 
 #include <SFML/Window/Event.hpp>
 #include <LK/Scene.hpp>
@@ -16,6 +17,7 @@ class GameScene : public Scene
 {
 public:
 	void onCreate() override;
+	void onReopen() override;
 	void onClose(int scene) override;
 
 	void onUpdate(float frameTime) override;
@@ -26,6 +28,8 @@ public:
 	void onSelectedColor(Card::Color color);
 
 private:
+	void takeInitialCard();
+
 	Deck deck;
 	CardEntity *currentCardEntity;
 	CardEntity *deckCardEntity;
@@ -34,6 +38,7 @@ private:
 	Player *currentPlayer;
 	Player *nextPlayer;
 	ColorSelectorEntity *colorSelector;
+	TurnIndicator *turnIndicator;
 };
 
 #endif // GAME_SCENE_HPP

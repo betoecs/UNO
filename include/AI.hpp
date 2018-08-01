@@ -17,8 +17,13 @@ public:
 	AI(GameScene *scene);
 	void think();
 	void doCommand();
-	Card::Color chooseColor() const;
+ 	CardEntity * chooseCard();
 	void take(int number) override;
+	Card::Color chooseColor() const;
+	int getCardCountByColor(Card::Color color) const;
+	int getCardCountBySymbol(Card::Symbol symbol) const;
+	std::vector <CardEntity *> getCardsByColor(Card::Color color) const;
+	std::vector <CardEntity *> getCardsBySymbol(Card::Symbol symbol) const;
 
 private:
 	GameScene *scene;

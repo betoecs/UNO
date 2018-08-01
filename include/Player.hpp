@@ -11,14 +11,15 @@
 
 using namespace lk;
 
-class Player : public Entity
+class Player : public LinearLayout
 {
 public:
 	Player(Deck *deck);
-	void removeCard(CardEntity *card);
 	void addCard(Card *card, bool faceDown);
 	const std::vector <CardEntity *> & getCards() const;
 	bool hasCards() const;
+	void removeCard(CardEntity *card);
+	void removeCards();
 	virtual void take(int number);
 
 private:

@@ -1,6 +1,8 @@
 #ifndef CARD_HPP
 #define CARD_HPP
 
+#include <string>
+
 class Card
 {
 public:
@@ -10,7 +12,7 @@ public:
         Green	= 1,
 		Blue	= 2,
         Yellow	= 3,
-        NoColor    = 4
+        NoColor = 4
     };
 
     enum Symbol
@@ -48,11 +50,14 @@ public:
     Symbol getSymbol() const;
     void setSymbol(Symbol symbol);
     Compatibility getCompatibility(const Card &card) const;
+    std::string toString() const;
 
 private:
     bool used;
     Color color;
     Symbol symbol;
 };
+
+std::string colorToString(Card::Color color);
 
 #endif // CARD_HPP

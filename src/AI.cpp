@@ -1,9 +1,17 @@
 #include "AI.hpp"
+#include <LK/AssetsManager.hpp>
 #include <math.h>
 
 ///////////////////////////////////////
 AI::AI(GameScene *scene) : Player(&scene->getDeck()), scene(scene), command(None), cardToSet(nullptr)
 {
+	logFile.open(AssetsManager::assetsPath + "ai-report.log");
+}
+
+///////////////////////////////////////
+AI::~AI()
+{
+	logFile.close();
 }
 
 ///////////////////////////////////////
@@ -12,6 +20,7 @@ void AI::think()
 	if (command != None)
 		return;
 
+	logFile << "Current card is '" << scene->getCurrentCard()->toString() << "'\n";
 	CardEntity * card = chooseCard();
 	if (card)
 	{
@@ -20,7 +29,10 @@ void AI::think()
 	}
 
 	if (command == None)
+	{
+		logFile << "I decided to get a card from the deck because I don't have compatible cards\n";
 		command = GetCard;
+	}
 
 	scene->setTimeout(std::bind(&AI::doCommand, this), 1);
 }
@@ -42,7 +54,11 @@ void AI::doCommand()
 void AI::take(int number)
 {
 	for (int i = 0; i < number; i++)
-		addCard(scene->getDeck().getCard(), true);
+	{
+		auto *card = scene->getDeck().getCard();
+		addCard(card, true);
+		logFile << "I received the card '" << card->toString() << "' from the deck\n";
+	}
 }
 
 ///////////////////////////////////////
@@ -58,7 +74,7 @@ Card::Color AI::chooseColor() const
 	max = (max > greenCount) ? max : greenCount;
 	max = (max > yellowCount) ? max : yellowCount;
 
-	std::vector<Card::Color> maxColors;
+	std::vector <Card::Color> maxColors;
 
 	if (max == redCount)
 		maxColors.push_back(Card::Red);
@@ -70,7 +86,10 @@ Card::Color AI::chooseColor() const
 		maxColors.push_back(Card::Yellow);
 
 	if (maxColors.size() == 1)
+	{
+		logFile << "I chosen the color " << colorToString(maxColors [0]) << " because I have more cards than any another color";
 		return maxColors [0];
+	}
 
 	Card::Color maxWeighingColor = Card::Red;
 	int maxWeighing = 0;
@@ -97,6 +116,7 @@ Card::Color AI::chooseColor() const
 			maxWeighing = colorWeighing;
 			maxWeighingColor = color;
 		}
+		logFile << "Im chosen the color " << colorToString(maxWeighingColor) << " becuse it has the max weighing.\n";
 	}
 	return maxWeighingColor;
 }
@@ -116,6 +136,7 @@ CardEntity * AI::chooseCard()
 			if (cardsByColor.size() > 1)
 			{
 				selectedCard = card;
+				logFile << "I chosen the card '" << card->getCard()->toString() << "' because it let me play another card of the same color\n";
 				break;
 			}
 		}
@@ -129,7 +150,10 @@ CardEntity * AI::chooseCard()
 	}
 
 	if (selectedCard)
+	{
+		logFile << "I chosen the card '" << selectedCard->getCard()->toString() << "' because it has the same color\n";
 		return selectedCard;
+	}
 
 	max = 0;
 	for (auto card : cardsBySymbol)
@@ -143,15 +167,25 @@ CardEntity * AI::chooseCard()
 	}
 
 	if (selectedCard)
+	{
+		logFile << "I chosen the card '" << selectedCard->getCard()->toString()
+				<< "' because it has the same symbol and its color is the color that I have more cards\n";
 		return selectedCard;
+	}
 
 	std::vector <CardEntity *> wild = getCardsBySymbol(Card::Wild);
 	if (wild.size() != 0)
+	{
+		logFile << "I chosen the Wild card because I don't have cards with the same color nor cards with the same symbol\n";
 		return wild [0];
+	}
 
 	std::vector <CardEntity *> take4 = getCardsBySymbol(Card::Take4);
 	if (take4.size() != 0)
+	{
+		logFile << "I chosen the Take4 card because I don't have cards with the same color nor cards with the same symbol\n";
 		return take4 [0];
+	}
 
 	return nullptr;
 }

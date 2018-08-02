@@ -3,6 +3,7 @@
 
 #include "Player.hpp"
 #include "GameScene.hpp"
+#include <fstream>
 
 class AI : public Player
 {
@@ -15,6 +16,7 @@ public:
 	};
 
 	AI(GameScene *scene);
+	~AI();
 	void think();
 	void doCommand();
  	CardEntity * chooseCard();
@@ -29,6 +31,7 @@ private:
 	GameScene *scene;
 	Command command;
 	CardEntity *cardToSet;
+	mutable std::ofstream logFile;
 };
 
 #endif // AI_HPP
